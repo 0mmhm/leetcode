@@ -16,7 +16,6 @@ public:
         
         ListNode *prev = head, *garbage, *curr = head->next;
         
-        
         while(curr != NULL) {
             if(curr->val == val) {
                 while(curr != NULL && curr->val == val) {
