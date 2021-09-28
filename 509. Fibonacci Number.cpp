@@ -1,20 +1,20 @@
 class Solution {
 public:
-    int F[31];
+    int dp[31];
     
-    int fibonacciGenerator(int n) {
-        if(n == 0) return 0;
-        if(n == 1) return 1;
+    int fibo(int n) {
+        if(dp[n] != -1) return dp[n];
         
-        return fibonacciGenerator(n-1) + fibonacciGenerator(n-2);
+        dp[n] = fibo(n-1) + fibo(n-2);
+        
+        return dp[n];
     }
     
     int fib(int n) {
-        F[0] = 0;
-        F[1] = 1;
+        for(int i=0 ; i<=n ; i++ ) dp[i] = -1;
+        dp[0] = 0;
+        dp[1] = 1;
         
-        if(n<=1) return F[n];
-
-        return fibonacciGenerator(n);
+        return n<2 ? dp[n] : fibo(n);
     }
 };
