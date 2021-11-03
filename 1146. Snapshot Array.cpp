@@ -1,40 +1,34 @@
 class SnapshotArray {
 public:
     
-    int sshot;
-    int v[50009];
+    vector <map <int, int>> map_vec;
+    int snapshot;
     
-    struct INFO{
-        map <int, int> mp;  
-    }sinfo[50009];
-    
-    SnapshotArray(int length) {
-        sshot = 0;
-        for(int i=0 ; i<length ; i++ ) {
-            v[i] = 0;
-            sinfo[i].mp.clear();
+    SnapshotArray(int length) : map_vec(length) {
+        snapshot = 0;
+        for(auto& mp : map_vec ) {
+            mp[0] = 0;
         }
     }
     
     void set(int index, int val) {
-        v[index] = val + 1;
-        sinfo[sshot].mp[index] = val + 1;
+        auto it = prev(map_vec[index].end());
+        if( it->first == snapshot) {
+            it->second = val;
+        }
+        else {
+            map_vec[index].insert(map_vec[index].end(), make_pair(snapshot, val));
+        }
     }
     
     int snap() {
-        sshot++;
-        return sshot-1;
+        snapshot++;
+        
+        return snapshot - 1;
     }
     
     int get(int index, int snap_id) {
-        if( sinfo[snap_id].mp[index] != 0 )
-            return sinfo[snap_id].mp[index] == 0 ? 0 : sinfo[snap_id].mp[index] - 1;
-        
-        while(snap_id > 0 && sinfo[snap_id].mp[index] == 0) {
-            snap_id--;
-        }
-        
-        return sinfo[snap_id].mp[index] == 0 ? 0 : sinfo[snap_id].mp[index] - 1;
+        return prev(map_vec[index].upper_bound(snap_id))->second;
     }
 };
 
