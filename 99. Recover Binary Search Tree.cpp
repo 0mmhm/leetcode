@@ -11,45 +11,31 @@
  */
 class Solution {
 public:
-    vector <int> v;
-    int x, y;
-    
-    void traverseTreeInorder(TreeNode* node, bool sign) {
-        if( !node ) return;
-        
-        traverseTreeInorder(node->left, sign);
-        
-        if( !sign ) v.push_back(node->val);
-        else{
-            if( node->val == x )
-                node->val = y;
-            else if( node->val == y )
-                node->val = x;
-        }
-        
-        traverseTreeInorder(node->right, sign);
-    }
-    
     void recoverTree(TreeNode* root) {
-        traverseTreeInorder(root, false);
+        TreeNode *pNode, *prev = NULL, *x = NULL, *y = NULL, *node = root;
+        stack <TreeNode*> st;
         
-        bool found = false;
-        x = y = -1;
-        int i, len = v.size();
-        
-        for( i=0 ; i<len-1 ; i++ ) {
-            if( v[i] > v[i+1] ) {
-                y = v[i+1];
-                
-                if( !found ) {
-                    found = true;
-                    x = v[i];
+        while( !st.empty() || node ) {
+            while( node ) {
+                st.push(node);
+                node = node->left;
+            }
+            
+            if( !st.empty() ) {
+                node = st.top(); st.pop();
+                if( prev && prev->val > node->val ) {
+                    y = node;
+                    
+                    if( !x ) x = prev;
+                    else break;
                 }
-                else 
-                    i = len;
+                prev = node;
+                node = node->right;
             }
         }
         
-        traverseTreeInorder(root, true);
+        int temp = x->val;
+        x->val = y->val;
+        y->val = temp;
     }
 };
