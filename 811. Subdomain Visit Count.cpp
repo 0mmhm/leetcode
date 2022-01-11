@@ -9,25 +9,23 @@ public:
         i = num = 0;
         vector<string> v;
         v.clear();
+        
+        stringstream check(str);
+        string intermediate;
+        while(getline(check, intermediate, ' ')) {
+            v.push_back(intermediate);
+        }
+        
+        num = stoi(v[0]);
+        str = v[1];
+        stringstream check1(str);
+        v.clear();
+        
+        while(getline(check1, intermediate, '.')) {
+            v.push_back(intermediate);
+        }
+        
         string s = "";
-        
-        while(str[i] != ' '){ 
-            num = (num*10) + (str[i++] - '0');
-        }
-        i++;
-        
-        s = "";
-        while(i<len) {
-            if(str[i] == '.') {
-                v.push_back(s);
-                s = "";
-            }
-            else {
-                s += str[i];
-            }
-            i++;
-        }
-        v.push_back(s);
         for( i=v.size()-1 ; i>=0 ; i-- ) {
             s = "";   
             for( j=i ; j<v.size() ; j++) {
@@ -36,18 +34,6 @@ public:
             }
             mp[s] += num;
         }
-    }
-    
-    string stringify(int num) {
-        string s = "";
-        int i;
-        
-        while(num > 0) {
-            i = num % 10;
-            num /= 10;
-            s =  to_string(i) + s;
-        }
-        return s;
     }
     
     vector<string> subdomainVisits(vector<string>& cpdomains) {
@@ -64,7 +50,7 @@ public:
         for(it=mp.begin() ; it!=mp.end() ; it++) {
             s = it->first;
             num = it->second;
-            n = stringify(num);
+            n = to_string(num);
             
             res.push_back( n + " " + s );
         }
