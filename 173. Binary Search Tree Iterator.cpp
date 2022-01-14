@@ -11,6 +11,39 @@
  */
 class BSTIterator {
 public:
+    stack<TreeNode*> st;
+    
+    BSTIterator(TreeNode* root) {
+        // st = stack<TreeNode*>();
+        // st.empty();
+        getsLeft(root);
+    }
+    
+    int next() {
+        TreeNode *n = st.top();
+        st.pop();
+        if(n->right) getsLeft(n->right);
+        return n->val;
+    }
+    
+    bool hasNext() {
+        if( !st.empty() ) return true;
+        return false;
+    }
+    
+    private:
+        void getsLeft(TreeNode* node) {
+            while(node) {
+                st.push(node);
+                node = node->left;
+            }
+        }
+};
+
+
+/*
+class BSTIterator {
+public:
     vector<int> v;
     int ind, len;
     void inorder(TreeNode* node) {
@@ -38,6 +71,8 @@ public:
         return false;
     }
 };
+
+*/
 
 /**
  * Your BSTIterator object will be instantiated and called as such:
