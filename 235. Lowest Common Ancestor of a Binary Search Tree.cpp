@@ -7,7 +7,20 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root) return NULL;
+        
+        int currVal = root->val;
+        if(currVal < p->val && currVal < q->val) return lowestCommonAncestor(root->right, p, q);
+        if(currVal > p->val && currVal > q->val) return lowestCommonAncestor(root->left, p, q);
+        
+        return root;
+    }
+};
 
+/* brute force solution
 class Solution {
 public:
     map<TreeNode*, int> mp;
@@ -54,3 +67,4 @@ public:
         return res;
     }
 };
+*/
