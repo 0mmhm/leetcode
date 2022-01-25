@@ -9,6 +9,36 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+class Solution {
+public:
+    stack<TreeNode*> st;
+    
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        for(int num: nums) {
+            TreeNode* node = new TreeNode(num);
+            
+            while(!st.empty() && st.top()->val < node->val) {
+                node->left = st.top();
+                st.pop();
+            }
+            
+            if(!st.empty()) {
+                st.top()->right = node;
+            }
+            
+            st.push(node);
+        }
+        
+        while(st.size() > 1) {
+            st.pop();
+        }
+        
+        return st.top();
+    }
+}
+
+/*  //n^2 solution
 class Solution {
 public:
     unordered_map<int, int> mp;
@@ -47,3 +77,4 @@ public:
         return createTree(0, len-1, nums);
     }
 };
+*/
