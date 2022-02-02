@@ -30,3 +30,44 @@ public:
         return res;
     }
 };
+
+/*                          // sliding Window
+class Solution {
+public: 
+    bool check(int pmap[], int smap[]) {
+        int i;
+        for( i=0 ; i<26 ; i++ ) {
+            if(pmap[i] != smap[i]) return false;
+        }
+        
+        return true;
+    }
+    
+    vector<int> findAnagrams(string s, string p) {
+        int i, j, lens, lenp;
+        lens = s.length(); lenp = p.length();
+        
+        int pmap[26], smap[26];
+        for( i=0 ; i<26 ; i++ ) pmap[i] = smap[i] = 0;
+        
+        for(i=0 ; i<lenp ; i++) pmap[p[i]-'a']++;
+        
+        vector<int> res;
+        i = j = 0;
+        while(j<lens) {
+            smap[s[j]-'a']++;
+            
+            if( j - i + 1 == lenp ) {
+                bool ret = check(pmap, smap);
+                if(ret) res.push_back(i);
+                smap[s[i] - 'a']--;
+                i++;
+            }
+            j++;
+        }
+        
+        return res;
+    }
+};
+
+*/
