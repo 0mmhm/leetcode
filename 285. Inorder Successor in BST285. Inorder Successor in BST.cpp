@@ -9,6 +9,30 @@
  */
 class Solution {
 public:
+    bool found = false;
+    TreeNode *successor = NULL;
+
+    void traverse(TreeNode* node, TreeNode* p) {
+        if(found || !node) return;
+        traverse(node->left, p);
+        
+        if(!found && node->val > p->val) {
+            successor = node;
+            found = true;
+        }
+        
+        traverse(node->right, p);
+    }
+    
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        traverse(root, p);
+        
+        return successor;
+    }
+};
+/*
+class Solution {
+public:
     map<TreeNode*, TreeNode*> mp;
     
     TreeNode* successor(TreeNode* p) {
@@ -42,3 +66,4 @@ public:
         return successor(p);
     }
 };
+*/
