@@ -41,3 +41,41 @@ public:
         return new TreeNode(v[mid], create(0, mid-1), create(mid+1, len-1));
     }
 };
+
+/*
+class Solution {
+public:
+    
+    int successor(TreeNode* node) {
+        node = node->right;
+        while(node->left) node = node->left;
+        return node->val;
+    }
+    
+    int predecessor(TreeNode* node) {
+        node = node->left;
+        while(node->right) node = node->right;
+        return node->val;
+    }
+    
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root) return NULL;
+        
+        if(key > root->val) root->right = deleteNode(root->right, key);
+        else if(key < root->val) root->left = deleteNode(root->left, key);
+        else{
+            if(!root->left && !root->right) root = NULL;
+            else if(root->right) {
+                root->val = successor(root);
+                root->right = deleteNode(root->right, root->val);
+            }
+            else {
+                root->val = predecessor(root);
+                root->left = deleteNode(root->left, root->val);
+            }
+        }
+        
+        return root;
+    }
+};
+*/
